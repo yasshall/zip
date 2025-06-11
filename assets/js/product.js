@@ -9,8 +9,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function initializeProductPage() {
     const productId = getUrlParameter('id');
+    const productSlug = getUrlParameter('slug');
     
-    if (!productId) {
+    if (!productId && !productSlug) {
         showNotification('Produit non trouvé', 'error');
         setTimeout(() => {
             window.location.href = 'products.html';
@@ -18,31 +19,56 @@ function initializeProductPage() {
         return;
     }
     
-    loadProduct(productId);
+    loadProduct(productId, productSlug);
     initializeQuantityControls();
     initializeProductActions();
 }
 
-function loadProduct(productId) {
-    currentProduct = products.find(p => p.id == productId);
-    
-    if (!currentProduct) {
-        showNotification('Produit non trouvé', 'error');
-        setTimeout(() => {
-            window.location.href = 'products.html';
-        }, 2000);
-        return;
-    }
-    
-    displayProduct();
-    loadRelatedProducts();
-    
-    // Update page title and meta description
-    document.title = `${currentProduct.name} - Luxury Watches`;
-    
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-        metaDescription.content = currentProduct.description;
+async function loadProduct(productId, productSlug) {
+    try {
+        // Wait for products to be loaded in main.js
+        if (!window.products || window.products.length === 0) {
+            console.log('Products not loaded yet, waiting...');
+            // Wait for products to be loaded
+            await new Promise(resolve => {
+                const checkProducts = () => {
+                    if (window.products && window.products.length > 0) {
+                        resolve();
+                    } else {
+                        setTimeout(checkProducts, 100);
+                    }
+                };
+                checkProducts();
+            });
+        }
+        
+        if (productId) {
+            currentProduct = window.products.find(p => p.id == productId);
+        } else if (productSlug) {
+            currentProduct = window.products.find(p => p.slug === productSlug);
+        }
+        
+        if (!currentProduct) {
+            showNotification('Produit non trouvé', 'error');
+            setTimeout(() => {
+                window.location.href = 'products.html';
+            }, 2000);
+            return;
+        }
+        
+        displayProduct();
+        loadRelatedProducts();
+        
+        // Update page title and meta description
+        document.title = `${currentProduct.name} - Luxury Watches`;
+        
+        const metaDescription = document.querySelector('meta[name="description"]');
+        if (metaDescription) {
+            metaDescription.content = currentProduct.description;
+        }
+    } catch (error) {
+        console.error('Error loading product:', error);
+        showNotification('Erreur lors du chargement du produit', 'error');
     }
 }
 
@@ -110,7 +136,21 @@ function displayThumbnails() {
     const thumbnailsContainer = document.getElementById('thumbnail-images');
     if (!thumbnailsContainer || !currentProduct.images) return;
     
-    thumbnailsContainer.innerHTML = currentProduct.images.map((image, index) => `
+    // Ensure images is an array
+    let images = currentProduct.images;
+    if (typeof images === 'string') {
+        try {
+            images = JSON.parse(images);
+        } catch (e) {
+            images = [currentProduct.image];
+        }
+    }
+    
+    if (!Array.isArray(images) || images.length === 0) {
+        images = [currentProduct.image];
+    }
+    
+    thumbnailsContainer.innerHTML = images.map((image, index) => `
         <div class="thumbnail ${index === 0 ? 'active' : ''}" onclick="changeMainImage(${index})">
             <img src="${image}" alt="${currentProduct.name} ${index + 1}" loading="lazy">
         </div>
@@ -118,7 +158,23 @@ function displayThumbnails() {
 }
 
 function changeMainImage(index) {
-    if (!currentProduct.images || !currentProduct.images[index]) return;
+    if (!currentProduct.images) return;
+    
+    // Ensure images is an array
+    let images = currentProduct.images;
+    if (typeof images === 'string') {
+        try {
+            images = JSON.parse(images);
+        } catch (e) {
+            images = [currentProduct.image];
+        }
+    }
+    
+    if (!Array.isArray(images) || images.length === 0) {
+        images = [currentProduct.image];
+    }
+    
+    if (!images[index]) return;
     
     currentImageIndex = index;
     
@@ -126,7 +182,7 @@ function changeMainImage(index) {
     if (mainImage) {
         mainImage.style.opacity = '0';
         setTimeout(() => {
-            mainImage.src = currentProduct.images[index];
+            mainImage.src = images[index];
             mainImage.style.opacity = '1';
         }, 150);
     }
@@ -142,12 +198,31 @@ function displayFeatures() {
     const featuresContainer = document.getElementById('product-features');
     if (!featuresContainer || !currentProduct.features) return;
     
-    featuresContainer.innerHTML = Object.entries(currentProduct.features).map(([key, value]) => `
+    // Ensure features is an object
+    let features = currentProduct.features;
+    if (typeof features === 'string') {
+        try {
+            features = JSON.parse(features);
+        } catch (e) {
+            features = {};
+        }
+    }
+    
+    if (!features || typeof features !== 'object') {
+        features = {};
+    }
+    
+    featuresContainer.innerHTML = Object.entries(features).map(([key, value]) => `
         <li>
             <span>${key}</span>
             <span>${value}</span>
         </li>
     `).join('');
+    
+    // If no features, add a default message
+    if (Object.keys(features).length === 0) {
+        featuresContainer.innerHTML = '<li><span>Aucune caractéristique disponible</span></li>';
+    }
 }
 
 function initializeQuantityControls() {
@@ -189,6 +264,11 @@ function initializeProductActions() {
     
     if (addToCartBtn) {
         addToCartBtn.addEventListener('click', function() {
+            if (!currentProduct) {
+                showNotification('Produit non disponible', 'error');
+                return;
+            }
+            
             const quantity = parseInt(document.getElementById('quantity').value);
             addToCart(currentProduct.id, quantity);
         });
@@ -196,6 +276,11 @@ function initializeProductActions() {
     
     if (buyNowBtn) {
         buyNowBtn.addEventListener('click', function() {
+            if (!currentProduct) {
+                showNotification('Produit non disponible', 'error');
+                return;
+            }
+            
             const quantity = parseInt(document.getElementById('quantity').value);
             addToCart(currentProduct.id, quantity);
             
@@ -209,16 +294,18 @@ function initializeProductActions() {
 
 function loadRelatedProducts() {
     const relatedProductsContainer = document.getElementById('related-products');
-    if (!relatedProductsContainer) return;
+    if (!relatedProductsContainer || !currentProduct) return;
     
     // Get products from same category, excluding current product
-    const relatedProducts = products
-        .filter(p => p.id !== currentProduct.id && p.category === currentProduct.category)
+    const relatedProducts = window.products
+        .filter(p => p.id !== currentProduct.id && 
+                    (p.category === currentProduct.category || 
+                     p.category_slug === currentProduct.category_slug))
         .slice(0, 4);
     
     if (relatedProducts.length === 0) {
         // If no products in same category, get random products
-        const randomProducts = products
+        const randomProducts = window.products
             .filter(p => p.id !== currentProduct.id)
             .sort(() => 0.5 - Math.random())
             .slice(0, 4);
@@ -257,13 +344,27 @@ function loadRelatedProducts() {
 document.addEventListener('keydown', function(e) {
     if (!currentProduct || !currentProduct.images) return;
     
+    // Ensure images is an array
+    let images = currentProduct.images;
+    if (typeof images === 'string') {
+        try {
+            images = JSON.parse(images);
+        } catch (e) {
+            images = [currentProduct.image];
+        }
+    }
+    
+    if (!Array.isArray(images) || images.length === 0) {
+        images = [currentProduct.image];
+    }
+    
     if (e.key === 'ArrowLeft') {
         e.preventDefault();
-        const newIndex = currentImageIndex > 0 ? currentImageIndex - 1 : currentProduct.images.length - 1;
+        const newIndex = currentImageIndex > 0 ? currentImageIndex - 1 : images.length - 1;
         changeMainImage(newIndex);
     } else if (e.key === 'ArrowRight') {
         e.preventDefault();
-        const newIndex = currentImageIndex < currentProduct.images.length - 1 ? currentImageIndex + 1 : 0;
+        const newIndex = currentImageIndex < images.length - 1 ? currentImageIndex + 1 : 0;
         changeMainImage(newIndex);
     }
 });

@@ -165,7 +165,7 @@ function updateProduct($db, $data) {
         $features = [];
         if (!empty($data['feature_keys'])) {
             foreach ($data['feature_keys'] as $index => $key) {
-                if (!empty($key) && !empty($data['feature_values'][$index])) {
+                if (!empty($key) && isset($data['feature_values'][$index])) {
                     $features[trim($key)] = trim($data['feature_values'][$index]);
                 }
             }

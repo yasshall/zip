@@ -54,9 +54,9 @@
             <ul class="nav-menu">
                 <li><a href="index.html" class="nav-link active">Accueil</a></li>
                 <li><a href="contact.html" class="nav-link">Contact</a></li>
-                <li><a href="nouveautes" class="nav-link">Nouveautés</a></li>
-                <li><a href="montres-homme" class="nav-link">Montres Homme</a></li>
-                <li><a href="montres-femme" class="nav-link">Montres Femme</a></li>
+                <li><a href="products.html?category=new" class="nav-link">Nouveautés</a></li>
+                <li><a href="products.html?category=men" class="nav-link">Montres Homme</a></li>
+                <li><a href="products.html?category=women" class="nav-link">Montres Femme</a></li>
                 <li><a href="cart.html" class="nav-link cart-link">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
@@ -81,8 +81,8 @@
                 <h1>Collection Exclusive de Montres de Luxe</h1>
                 <p>Découvrez l'excellence horlogère avec notre sélection de montres premium</p>
                 <div class="hero-buttons">
-                    <a href="montres-homme" class="btn btn-primary">Montres Homme</a>
-                    <a href="montres-femme" class="btn btn-secondary">Montres Femme</a>
+                    <a href="products.html?category=men" class="btn btn-primary">Montres Homme</a>
+                    <a href="products.html?category=women" class="btn btn-secondary">Montres Femme</a>
                 </div>
             </div>
         </div>
@@ -97,6 +97,7 @@
             </div>
             <div class="products-grid" id="new-arrivals-grid">
                 <!-- Products will be loaded dynamically -->
+                <div class="loading-spinner"></div>
             </div>
         </div>
     </section>

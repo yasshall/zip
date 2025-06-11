@@ -10,8 +10,8 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // App initialization
-function initializeApp() {
-    loadProducts();
+async function initializeApp() {
+    await loadProducts();
     updateCartCount();
     initializeNavigation();
     initializeWhatsApp();
@@ -52,13 +52,17 @@ function getCurrentPage() {
 // Load products from API
 async function loadProducts() {
     try {
+        console.log('Loading products from API...');
         const response = await fetch('backend/api/products.php');
         const data = await response.json();
         
-        if (data.success) {
+        console.log('API Response:', data);
+        
+        if (data.success && data.products) {
             products = data.products;
+            console.log('Products loaded successfully:', products.length);
         } else {
-            // Fallback to demo data if API fails
+            console.warn('API returned success: false or no products. Using demo data.');
             products = getDemoProducts();
         }
     } catch (error) {
@@ -69,6 +73,7 @@ async function loadProducts() {
 
 // Demo products data
 function getDemoProducts() {
+    console.log('Using demo products data');
     return [
         {
             id: 1,
@@ -83,6 +88,7 @@ function getDemoProducts() {
                 "https://images.pexels.com/photos/277390/pexels-photo-277390.jpeg?auto=compress&cs=tinysrgb&w=400"
             ],
             category: "men",
+            category_slug: "men",
             is_new: true,
             features: {
                 "Mouvement": "Automatique",
@@ -104,6 +110,7 @@ function getDemoProducts() {
                 "https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?auto=compress&cs=tinysrgb&w=400"
             ],
             category: "men",
+            category_slug: "men",
             is_new: false,
             features: {
                 "Mouvement": "Quartz",
@@ -125,6 +132,7 @@ function getDemoProducts() {
                 "https://images.pexels.com/photos/1616804/pexels-photo-1616804.jpeg?auto=compress&cs=tinysrgb&w=400"
             ],
             category: "women",
+            category_slug: "women",
             is_new: true,
             features: {
                 "Mouvement":  "Automatique",
@@ -146,6 +154,7 @@ function getDemoProducts() {
                 "https://images.pexels.com/photos/1697214/pexels-photo-1697214.jpeg?auto=compress&cs=tinysrgb&w=400"
             ],
             category: "women",
+            category_slug: "women",
             is_new: false,
             features: {
                 "Mouvement": "Mécanique",
@@ -170,7 +179,7 @@ function initializeNavigation() {
     
     // Close mobile menu when clicking outside
     document.addEventListener('click', function(e) {
-        if (navMenu && !navToggle.contains(e.target) && !navMenu.contains(e.target)) {
+        if (navMenu && navToggle && !navToggle.contains(e.target) && !navMenu.contains(e.target)) {
             navMenu.classList.remove('active');
         }
     });
@@ -253,7 +262,10 @@ function updateCartCount() {
 
 function addToCart(productId, quantity = 1) {
     const product = products.find(p => p.id == productId);
-    if (!product) return;
+    if (!product) {
+        console.error('Product not found:', productId);
+        return;
+    }
     
     const existingItem = cart.find(item => item.id == productId);
     
@@ -440,7 +452,14 @@ function loadNewArrivals() {
     const newArrivalsGrid = document.getElementById('new-arrivals-grid');
     if (!newArrivalsGrid) return;
     
+    console.log('Loading new arrivals...');
     const newProducts = products.filter(product => product.is_new).slice(0, 4);
+    console.log('New products found:', newProducts.length);
+    
+    if (newProducts.length === 0) {
+        newArrivalsGrid.innerHTML = '<p>Aucun nouveau produit disponible pour le moment.</p>';
+        return;
+    }
     
     newArrivalsGrid.innerHTML = newProducts.map(product => `
         <div class="product-card">
@@ -464,7 +483,7 @@ function loadNewArrivals() {
                         </svg>
                         Ajouter
                     </button>
-                    <a href="product/${product.slug}" class="btn btn-primary">Voir</a>
+                    <a href="product.html?id=${product.id}" class="btn btn-primary">Voir</a>
                 </div>
             </div>
         </div>

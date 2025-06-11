@@ -21,12 +21,11 @@ class Database {
                     PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8mb4"
                 ]
             );
+            return $this->conn;
         } catch(PDOException $exception) {
-            error_log("Connection error: " . $exception->getMessage());
+            error_log("Database connection error: " . $exception->getMessage());
             throw new Exception("Database connection failed: " . $exception->getMessage());
         }
-        
-        return $this->conn;
     }
 }
 

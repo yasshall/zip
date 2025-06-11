@@ -10,12 +10,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 require_once '../config/database.php';
 
-$database = new Database();
-$db = $database->getConnection();
-
-$method = $_SERVER['REQUEST_METHOD'];
-
 try {
+    $database = new Database();
+    $db = $database->getConnection();
+
+    $method = $_SERVER['REQUEST_METHOD'];
+
     switch ($method) {
         case 'GET':
             handleGetCategories($db);
@@ -35,8 +35,13 @@ try {
             break;
     }
 } catch (Exception $e) {
+    error_log("Categories API Error: " . $e->getMessage());
     http_response_code(500);
-    echo json_encode(['success' => false, 'message' => 'Server error: ' . $e->getMessage()]);
+    echo json_encode([
+        'success' => false, 
+        'message' => 'Server error: ' . $e->getMessage(),
+        'error_details' => $e->getTraceAsString()
+    ]);
 }
 
 function handleGetCategories($db) {
@@ -47,13 +52,13 @@ function handleGetCategories($db) {
             // Get single category
             $stmt = $db->prepare("SELECT * FROM categories WHERE id = ?");
             $stmt->execute([$id]);
-            $category = $stmt->fetch();
+            $category = $stmt->fetch(PDO::FETCH_ASSOC);
             
             if ($category) {
                 // Get product count
                 $stmt = $db->prepare("SELECT COUNT(*) as product_count FROM products WHERE category_id = ? AND is_active = 1");
                 $stmt->execute([$id]);
-                $category['product_count'] = $stmt->fetch()['product_count'];
+                $category['product_count'] = $stmt->fetch(PDO::FETCH_ASSOC)['product_count'];
                 
                 echo json_encode(['success' => true, 'category' => $category]);
             } else {
@@ -71,7 +76,7 @@ function handleGetCategories($db) {
             ORDER BY c.name
         ");
         $stmt->execute();
-        $categories = $stmt->fetchAll();
+        $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
         echo json_encode(['success' => true, 'categories' => $categories]);
         
@@ -115,7 +120,14 @@ function handleCreateCategory($db) {
         echo json_encode([
             'success' => true,
             'message' => 'Category created successfully',
-            'category_id' => $categoryId
+            'category_id' => $categoryId,
+            'category' => [
+                'id' => $categoryId,
+                'name' => $input['name'],
+                'slug' => $slug,
+                'description' => $input['description'] ?? '',
+                'product_count' => 0
+            ]
         ]);
         
     } catch (Exception $e) {
@@ -162,7 +174,16 @@ function handleUpdateCategory($db) {
         $stmt = $db->prepare($sql);
         $stmt->execute($params);
         
-        echo json_encode(['success' => true, 'message' => 'Category updated successfully']);
+        // Get updated category
+        $stmt = $db->prepare("SELECT * FROM categories WHERE id = ?");
+        $stmt->execute([$input['id']]);
+        $category = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        echo json_encode([
+            'success' => true, 
+            'message' => 'Category updated successfully',
+            'category' => $category
+        ]);
         
     } catch (Exception $e) {
         echo json_encode(['success' => false, 'message' => 'Error updating category: ' . $e->getMessage()]);
@@ -181,7 +202,7 @@ function handleDeleteCategory($db) {
         // Check if category has products
         $stmt = $db->prepare("SELECT COUNT(*) as count FROM products WHERE category_id = ? AND is_active = 1");
         $stmt->execute([$id]);
-        $productCount = $stmt->fetch()['count'];
+        $productCount = $stmt->fetch(PDO::FETCH_ASSOC)['count'];
         
         if ($productCount > 0) {
             echo json_encode(['success' => false, 'message' => 'Cannot delete category with products']);

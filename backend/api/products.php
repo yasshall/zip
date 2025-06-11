@@ -10,12 +10,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 require_once '../config/database.php';
 
-$database = new Database();
-$db = $database->getConnection();
-
-$method = $_SERVER['REQUEST_METHOD'];
-
 try {
+    $database = new Database();
+    $db = $database->getConnection();
+
+    $method = $_SERVER['REQUEST_METHOD'];
+
     switch ($method) {
         case 'GET':
             handleGetProducts($db);
@@ -35,14 +35,19 @@ try {
             break;
     }
 } catch (Exception $e) {
+    error_log("Products API Error: " . $e->getMessage());
     http_response_code(500);
-    echo json_encode(['success' => false, 'message' => 'Server error: ' . $e->getMessage()]);
+    echo json_encode([
+        'success' => false, 
+        'message' => 'Server error: ' . $e->getMessage(),
+        'error_details' => $e->getTraceAsString()
+    ]);
 }
 
 function handleGetProducts($db) {
     $category = $_GET['category'] ?? '';
-    $limit = $_GET['limit'] ?? 50;
-    $offset = $_GET['offset'] ?? 0;
+    $limit = isset($_GET['limit']) ? intval($_GET['limit']) : 50;
+    $offset = isset($_GET['offset']) ? intval($_GET['offset']) : 0;
     $search = $_GET['search'] ?? '';
     $id = $_GET['id'] ?? '';
     $slug = $_GET['slug'] ?? '';
@@ -68,7 +73,7 @@ function handleGetProducts($db) {
                 $stmt->execute([$slug]);
             }
             
-            $product = $stmt->fetch();
+            $product = $stmt->fetch(PDO::FETCH_ASSOC);
             
             if ($product) {
                 // Process product data
@@ -118,12 +123,12 @@ function handleGetProducts($db) {
         }
         
         $sql .= " ORDER BY p.created_at DESC LIMIT ? OFFSET ?";
-        $params[] = (int)$limit;
-        $params[] = (int)$offset;
+        $params[] = $limit;
+        $params[] = $offset;
         
         $stmt = $db->prepare($sql);
         $stmt->execute($params);
-        $products = $stmt->fetchAll();
+        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
         // Process products
         foreach ($products as &$product) {
@@ -132,6 +137,7 @@ function handleGetProducts($db) {
             $product['price'] = (float)$product['price'];
             $product['old_price'] = $product['old_price'] ? (float)$product['old_price'] : null;
             $product['is_new'] = (bool)$product['is_new'];
+            $product['category'] = $product['category_slug']; // Add category field for compatibility
             
             // Ensure images array includes main image
             if (!empty($product['image']) && !in_array($product['image'], $product['images'])) {
@@ -144,13 +150,7 @@ function handleGetProducts($db) {
         
         echo json_encode([
             'success' => true, 
-            'products' => $products,
-            'debug' => [
-                'category' => $category,
-                'sql' => $sql,
-                'params' => $params,
-                'count' => count($products)
-            ]
+            'products' => $products
         ]);
         
     } catch (Exception $e) {

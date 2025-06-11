@@ -84,36 +84,49 @@ async function loadAndDisplayProducts() {
     showLoading(true);
     
     try {
-        // Build API URL with category parameter
-        let apiUrl = 'backend/api/products.php?limit=50';
+        // Use the global products array from main.js
+        if (!window.products || window.products.length === 0) {
+            console.log('Products not loaded yet, waiting...');
+            // Wait for products to be loaded
+            await new Promise(resolve => {
+                const checkProducts = () => {
+                    if (window.products && window.products.length > 0) {
+                        resolve();
+                    } else {
+                        setTimeout(checkProducts, 100);
+                    }
+                };
+                checkProducts();
+            });
+        }
+        
+        console.log('Filtering products by category:', currentCategory);
+        console.log('Available products:', window.products.length);
+        
+        // Filter products by category
         if (currentCategory) {
-            apiUrl += `&category=${encodeURIComponent(currentCategory)}`;
-        }
-        
-        console.log('Loading products from:', apiUrl); // Debug log
-        
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-        
-        console.log('API Response:', data); // Debug log
-        
-        if (data.success && data.products) {
-            filteredProducts = data.products;
-            
-            // Sort products
-            sortProducts();
-            
-            // Display products
-            displayProducts();
+            if (currentCategory === 'new') {
+                filteredProducts = window.products.filter(p => p.is_new);
+            } else {
+                filteredProducts = window.products.filter(p => 
+                    p.category === currentCategory || 
+                    p.category_slug === currentCategory
+                );
+            }
         } else {
-            console.error('API Error:', data.message || 'Unknown error');
-            
-            // Fallback to demo data if API fails
-            console.log('Falling back to demo data...');
-            loadFallbackProducts();
+            filteredProducts = [...window.products];
         }
+        
+        console.log('Filtered products:', filteredProducts.length);
+        
+        // Sort products
+        sortProducts();
+        
+        // Display products
+        displayProducts();
     } catch (error) {
         console.error('Error loading products:', error);
+        showNotification('Erreur lors du chargement des produits', 'error');
         
         // Fallback to demo data
         console.log('Falling back to demo data due to error...');
@@ -169,7 +182,7 @@ function displayProducts() {
     const productsGrid = document.getElementById('products-grid');
     if (!productsGrid) return;
     
-    console.log('Displaying products:', filteredProducts.length); // Debug log
+    console.log('Displaying products:', filteredProducts.length);
     
     if (filteredProducts.length === 0) {
         productsGrid.innerHTML = `
@@ -211,7 +224,7 @@ function displayProducts() {
                         </svg>
                         Ajouter
                     </button>
-                    <a href="product/${product.slug || 'product-' + product.id}" class="btn btn-primary">Voir Détails</a>
+                    <a href="product.html?id=${product.id}" class="btn btn-primary">Voir Détails</a>
                 </div>
             </div>
         </div>
