@@ -1,0 +1,56 @@
+CPANEL UPLOAD CHECKLIST
+=======================
+
+BEFORE UPLOADING:
+1. Create MySQL database in cPanel
+2. Note database credentials (name, user, password, host)
+3. Update backend/config/database.php with your credentials
+4. Replace all placeholder contact info (+212XXXXXXXXX, etc.)
+5. Update Facebook Pixel and Google Analytics IDs
+
+FILES TO UPLOAD TO public_html/:
+================================
+
+ROOT FILES:
+- index.html
+- products.html  
+- product.html
+- cart.html
+- checkout.html
+- thank-you.html
+- contact.html
+
+ASSETS FOLDER:
+- assets/css/styles.css
+- assets/js/main.js
+- assets/js/cart.js
+- assets/js/checkout.js
+- assets/js/contact.js
+- assets/js/product.js
+- assets/js/products.js
+- assets/js/thank-you.js
+
+BACKEND FOLDER:
+- backend/config/database.php
+- backend/api/products.php
+- backend/api/orders.php
+- backend/api/categories.php
+- backend/api/newsletter.php
+- backend/admin/index.php
+- backend/admin/dashboard.php
+- backend/admin/assets/admin.css
+- backend/admin/includes/header.php
+- backend/admin/includes/sidebar.php
+
+AFTER UPLOADING:
+1. Set file permissions (PHP files: 644, Folders: 755)
+2. Test: yourdomain.com/backend/api/products.php
+3. Test admin: yourdomain.com/backend/admin/
+4. Test main site: yourdomain.com
+5. Install SSL certificate
+6. Change admin password (default: admin/luxury2024)
+
+ADMIN ACCESS:
+URL: https://yourdomain.com/backend/admin/
+Default Login: admin / luxury2024
+CHANGE THESE IMMEDIATELY AFTER FIRST LOGIN!

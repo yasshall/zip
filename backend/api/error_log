@@ -1,0 +1,77 @@
+[11-Jun-2025 03:35:26 UTC] Database initialization error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[11-Jun-2025 03:35:26 UTC] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/hazubjvk/montreselite.com/backend/api/products.php:100
+Stack trace:
+#0 /home/hazubjvk/montreselite.com/backend/api/products.php(21): handleGetProducts()
+#1 {main}
+  thrown in /home/hazubjvk/montreselite.com/backend/api/products.php on line 100
+[11-Jun-2025 03:35:31 UTC] Database initialization error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[11-Jun-2025 03:35:31 UTC] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/hazubjvk/montreselite.com/backend/api/products.php:100
+Stack trace:
+#0 /home/hazubjvk/montreselite.com/backend/api/products.php(21): handleGetProducts()
+#1 {main}
+  thrown in /home/hazubjvk/montreselite.com/backend/api/products.php on line 100
+[11-Jun-2025 03:35:35 UTC] Database initialization error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[11-Jun-2025 03:35:35 UTC] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/hazubjvk/montreselite.com/backend/api/products.php:100
+Stack trace:
+#0 /home/hazubjvk/montreselite.com/backend/api/products.php(21): handleGetProducts()
+#1 {main}
+  thrown in /home/hazubjvk/montreselite.com/backend/api/products.php on line 100
+[11-Jun-2025 03:35:39 UTC] Database initialization error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[11-Jun-2025 03:35:39 UTC] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/hazubjvk/montreselite.com/backend/api/products.php:100
+Stack trace:
+#0 /home/hazubjvk/montreselite.com/backend/api/products.php(21): handleGetProducts()
+#1 {main}
+  thrown in /home/hazubjvk/montreselite.com/backend/api/products.php on line 100
+[11-Jun-2025 03:43:10 UTC] Database initialization error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[11-Jun-2025 03:45:09 UTC] Database initialization error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[11-Jun-2025 03:45:13 UTC] Database initialization error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[11-Jun-2025 03:45:15 UTC] Database initialization error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[11-Jun-2025 03:48:58 UTC] Database initialization error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[11-Jun-2025 03:50:17 UTC] Database initialization error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[11-Jun-2025 04:54:36 Africa/Casablanca] Database initialization error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[11-Jun-2025 05:04:22 Africa/Casablanca] Database initialization error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[11-Jun-2025 05:04:31 Africa/Casablanca] Database initialization error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[11-Jun-2025 05:15:23 Africa/Casablanca] Database initialization error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[11-Jun-2025 05:21:58 Africa/Casablanca] Database initialization error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[11-Jun-2025 05:23:03 Africa/Casablanca] Database initialization error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[11-Jun-2025 05:23:07 Africa/Casablanca] Database initialization error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[11-Jun-2025 05:23:52 Africa/Casablanca] Database initialization error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[11-Jun-2025 05:24:01 Africa/Casablanca] Database initialization error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[11-Jun-2025 05:24:07 Africa/Casablanca] Database initialization error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[11-Jun-2025 05:25:01 Africa/Casablanca] Database initialization error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[11-Jun-2025 05:42:18 Africa/Casablanca] Database initialization error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[11-Jun-2025 05:46:51 Africa/Casablanca] Database initialization error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[11-Jun-2025 05:46:51 Africa/Casablanca] Products API Error: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''50' OFFSET '0'' at line 5
+[11-Jun-2025 05:46:56 Africa/Casablanca] Database initialization error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[11-Jun-2025 05:46:56 Africa/Casablanca] Products API Error: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''50' OFFSET '0'' at line 5
+[11-Jun-2025 06:54:18 Africa/Casablanca] Database initialization error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[11-Jun-2025 06:54:18 Africa/Casablanca] Products API Error: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''50' OFFSET '0'' at line 5
+[11-Jun-2025 06:54:28 Africa/Casablanca] Database initialization error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[11-Jun-2025 06:54:36 Africa/Casablanca] Database initialization error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[11-Jun-2025 06:55:22 Africa/Casablanca] Database initialization error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[11-Jun-2025 06:58:56 Africa/Casablanca] Database initialization error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[11-Jun-2025 06:58:56 Africa/Casablanca] Products API Error: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''50' OFFSET '0'' at line 5
+[11-Jun-2025 07:06:48 Africa/Casablanca] Database initialization error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[11-Jun-2025 07:06:48 Africa/Casablanca] Products API Error: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''50' OFFSET '0'' at line 5
+[11-Jun-2025 08:24:50 UTC] Database initialization error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[11-Jun-2025 08:24:50 UTC] Products API Error: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''50' OFFSET '0'' at line 5
+[11-Jun-2025 08:59:36 UTC] Database initialization error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[11-Jun-2025 08:59:36 UTC] Products API Error: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''50' OFFSET '0'' at line 5
+[11-Jun-2025 08:59:41 UTC] Database initialization error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[11-Jun-2025 08:59:41 UTC] Products API Error: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''50' OFFSET '0'' at line 5
+[11-Jun-2025 09:21:33 UTC] Database initialization error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[11-Jun-2025 09:21:33 UTC] Products API Error: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''50' OFFSET '0'' at line 5
+[11-Jun-2025 09:21:48 UTC] Database initialization error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[11-Jun-2025 09:21:48 UTC] Products API Error: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''50' OFFSET '0'' at line 5
+[11-Jun-2025 13:31:08 UTC] Database initialization error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[11-Jun-2025 13:31:08 UTC] Products API Error: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''50' OFFSET '0'' at line 5
+[11-Jun-2025 15:10:35 UTC] Database initialization error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[11-Jun-2025 15:10:35 UTC] Products API Error: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''50' OFFSET '0'' at line 5
+[11-Jun-2025 15:39:21 UTC] Database initialization error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[11-Jun-2025 15:39:21 UTC] Products API Error: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''50' OFFSET '0'' at line 5
+[11-Jun-2025 15:53:24 UTC] Database initialization error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[11-Jun-2025 15:53:24 UTC] Products API Error: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''50' OFFSET '0'' at line 5
+[11-Jun-2025 16:14:09 UTC] Database initialization error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[11-Jun-2025 16:14:09 UTC] Products API Error: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''50' OFFSET '0'' at line 5
+[11-Jun-2025 22:15:17 Africa/Casablanca] Database initialization error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[11-Jun-2025 22:15:17 Africa/Casablanca] Products API Error: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''50' OFFSET '0'' at line 5

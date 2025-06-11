@@ -1,8 +1,11 @@
 {
-  "name": "zip-extractor",
+  "name": "luxury-watch-store",
+  "private": true,
   "version": "1.0.0",
   "type": "module",
-  "dependencies": {
-    "yauzl": "^3.0.0"
+  "scripts": {
+    "dev": "php -S localhost:8000",
+    "build": "echo 'Build complete'",
+    "preview": "php -S localhost:3000"
   }
 }

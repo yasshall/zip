@@ -1,0 +1,48 @@
+QUICK CPANEL SETUP STEPS
+========================
+
+1. LOGIN TO CPANEL
+   - Go to your hosting provider's cPanel login
+   - Enter your credentials
+
+2. CREATE DATABASE
+   - Click "MySQL Databases"
+   - Create database: luxury_watches
+   - Create user with full privileges
+   - Note: database name, username, password
+
+3. UPDATE DATABASE CONFIG
+   - Edit backend/config/database.php
+   - Replace localhost, db_name, username, password with your details
+
+4. UPLOAD FILES
+   - Use File Manager or FTP
+   - Upload all files to public_html/
+   - Maintain folder structure exactly as shown
+
+5. SET PERMISSIONS
+   - Right-click files → Change Permissions
+   - PHP files: 644
+   - Folders: 755
+
+6. TEST SETUP
+   - Visit: yourdomain.com/backend/api/products.php
+   - Should show JSON data
+   - Visit: yourdomain.com/backend/admin/
+   - Login: admin / luxury2024
+
+7. CUSTOMIZE
+   - Replace phone numbers (+212XXXXXXXXX)
+   - Replace email addresses
+   - Update Facebook Pixel & Google Analytics IDs
+   - Change admin password
+
+8. INSTALL SSL
+   - Go to SSL/TLS in cPanel
+   - Install Let's Encrypt (free)
+   - Force HTTPS
+
+Your store will be live at: https://yourdomain.com
+Admin panel at: https://yourdomain.com/backend/admin/
+
+IMPORTANT: Change admin password immediately after first login!
