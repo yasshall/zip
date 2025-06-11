@@ -145,10 +145,10 @@ function createTables($pdo) {
     
     // Insert default categories
     $pdo->exec("
-        INSERT IGNORE INTO categories (name, slug, description) VALUES
-        ('Montres Homme', 'men', 'Collection de montres de luxe pour homme'),
-        ('Montres Femme', 'women', 'Collection de montres élégantes pour femme'),
-        ('Nouveautés', 'new', 'Nos dernières acquisitions')
+        INSERT IGNORE INTO categories (id, name, slug, description) VALUES
+        (1, 'Montres Homme', 'men', 'Collection de montres de luxe pour homme'),
+        (2, 'Montres Femme', 'women', 'Collection de montres élégantes pour femme'),
+        (3, 'Nouveautés', 'new', 'Nos dernières acquisitions')
     ");
     
     // Insert sample products

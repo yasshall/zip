@@ -82,6 +82,7 @@ function handleGetProducts($db) {
                 $product['price'] = (float)$product['price'];
                 $product['old_price'] = $product['old_price'] ? (float)$product['old_price'] : null;
                 $product['is_new'] = (bool)$product['is_new'];
+                $product['category'] = $product['category_slug']; // For compatibility
                 
                 // Ensure images array includes main image
                 if (!empty($product['image']) && !in_array($product['image'], $product['images'])) {
