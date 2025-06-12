@@ -146,9 +146,6 @@ function handleGetProducts($db) {
             }
         }
         
-        // Debug logging
-        error_log("Products API - Category: $category, Found: " . count($products) . " products");
-        
         echo json_encode([
             'success' => true, 
             'products' => $products

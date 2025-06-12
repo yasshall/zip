@@ -42,6 +42,7 @@ function updatePageTitle() {
         }
         
         pageTitle.textContent = title;
+        document.title = title + " - Luxury Watches";
     }
     
     if (categoryFilter) {

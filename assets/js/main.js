@@ -58,7 +58,7 @@ async function loadProducts() {
         
         console.log('API Response:', data);
         
-        if (data.success && data.products) {
+        if (data.success && data.products && data.products.length > 0) {
             products = data.products;
             console.log('Products loaded successfully:', products.length);
         } else {
@@ -89,6 +89,7 @@ function getDemoProducts() {
             ],
             category: "men",
             category_slug: "men",
+            category_id: 1,
             is_new: true,
             features: {
                 "Mouvement": "Automatique",
@@ -111,6 +112,7 @@ function getDemoProducts() {
             ],
             category: "men",
             category_slug: "men",
+            category_id: 1,
             is_new: false,
             features: {
                 "Mouvement": "Quartz",
@@ -133,6 +135,7 @@ function getDemoProducts() {
             ],
             category: "women",
             category_slug: "women",
+            category_id: 2,
             is_new: true,
             features: {
                 "Mouvement":  "Automatique",
@@ -155,6 +158,7 @@ function getDemoProducts() {
             ],
             category: "women",
             category_slug: "women",
+            category_id: 2,
             is_new: false,
             features: {
                 "Mouvement": "Mécanique",
